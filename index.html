@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tick Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .buttons button.up {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .buttons button.down {
+            background-color: #F44336;
+            color: white;
+        }
+
+        .result {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .result.green {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .result.red {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .controls button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .controls button.reset {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .controls button.about {
+            background-color: #6c757d;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tick Analyzer</h1>
+
+        <div class="section">
+            <label for="market">Market:</label>
+            <select id="market">
+                <option>Volatility Index 10</option>
+                <option>Volatility Index 25</option>
+                <option>Volatility Index 50</option>
+                <option>Volatility Index 75</option>
+                <option>Volatility Index 100</option>
+            </select>
+        </div>
+
+        <div class="section">
+            <label for="trade-type">Trade Type:</label>
+            <select id="trade-type">
+                <option>Rise / Fall</option>
+                <option>Up / Down</option>
+                <option>Up / Lover</option>
+                <option>Touch / No Touch</option>
+            </select>
+        </div>
+
+        <div class="section">
+            <label for="stake">Stake:</label>
+            <input type="number" id="stake" placeholder="Enter your stake">
+        </div>
+
+        <div class="buttons">
+            <button class="up" onclick="recordClick('up')">Up</button>
+            <button class="down" onclick="recordClick('down')">Down</button>
+        </div>
+
+        <div class="section">
+            <label for="tick-count">Tick Count:</label>
+            <div id="tick-count">0</div>
+        </div>
+
+        <div class="result" id="result">Result will appear here</div>
+
+        <div class="controls">
+            <button class="reset" onclick="resetAnalyzer()">Reset</button>
+            <button class="about" onclick="showAbout()">About</button>
+        </div>
+    </div>
+
+    <script>
+        let upCount = 0;
+        let downCount = 0;
+
+        function recordClick(type) {
+            if (type === 'up') {
+                upCount++;
+            } else if (type === 'down') {
+                downCount++;
+            }
+
+            updateResult();
+        }
+
+        function updateResult() {
+            const total = upCount + downCount;
+            const resultDiv = document.getElementById('result');
+            const tickCountDiv = document.getElementById('tick-count');
+            tickCountDiv.textContent = total;
+
+            if (total >= 30) {
+                resultDiv.textContent = upCount > downCount ? 'Strong Buy' : 'Strong Sell';
+            } else if (total >= 15) {
+                resultDiv.textContent = upCount > downCount ? 'Medium Up' : 'Medium Down';
+            } else if (total > 0) {
+                resultDiv.textContent = upCount > downCount ? 'Buy' : 'Sell';
+            } else {
+                resultDiv.textContent = 'Result will appear here';
+            }
+
+            if (upCount > downCount) {
+                resultDiv.className = 'result green';
+            } else if (downCount > upCount) {
+                resultDiv.className = 'result red';
+            } else {
+                resultDiv.className = 'result';
+            }
+        }
+
+        function resetAnalyzer() {
+            upCount = 0;
+            downCount = 0;
+            updateResult();
+        }
+
+        function showAbout() {
+            alert('Tick Analyzer App v1.0\nDeveloped to analyze ticks based on up/down clicks.');
+        }
+    </script>
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
